@@ -6,7 +6,7 @@
 [node name="Game" type="Node2D"]
 
 [node name="Character" parent="." instance=ExtResource("1_v21s0")]
-position = Vector2(-3, -123)
+position = Vector2(-2, -89)
 
 [node name="Camera2D" type="Camera2D" parent="Character"]
 ignore_rotation = false
