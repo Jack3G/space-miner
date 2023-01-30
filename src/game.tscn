@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bfiqxm5d30gqc"]
+
+[ext_resource type="PackedScene" uid="uid://b21vfp2hf7k21" path="res://src/character.tscn" id="1_v21s0"]
+[ext_resource type="PackedScene" uid="uid://b6loo6ok5o7g1" path="res://src/planet.tscn" id="2_644f5"]
+
+[node name="Game" type="Node2D"]
+
+[node name="Character" parent="." instance=ExtResource("1_v21s0")]
+position = Vector2(-3, -123)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]
+ignore_rotation = false
+current = true
+
+[node name="Planet" parent="." instance=ExtResource("2_644f5")]
+position = Vector2(14, 50)
