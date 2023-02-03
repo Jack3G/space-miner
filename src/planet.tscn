@@ -14,7 +14,7 @@ point_count = 3
 script = ExtResource("1_58q8v")
 size_curve = SubResource("Curve_1qhq4")
 surface_offset = SubResource("FastNoiseLite_0jixa")
-textures = [ExtResource("5_r6okq")]
+textures = Array[Texture]([ExtResource("5_r6okq")])
 
 [node name="MaxSize" type="Marker2D" parent="."]
 position = Vector2(143, 57)
