@@ -5,6 +5,7 @@ extends StaticBody2D
 @export var surface_offset: Noise
 @export var offset_scale: float = 10
 @export var atmosphere_height: float = 80
+@export var gravity: float = 200
 
 @export var textures: Array[Texture]
 
@@ -43,7 +44,8 @@ func _ready() -> void:
 	gravity_area.gravity_space_override = Area2D.SPACE_OVERRIDE_COMBINE
 	gravity_area.gravity_point = true
 	gravity_area.gravity_point_center = Vector2.ZERO
-	
+	gravity_area.gravity = gravity
+
 	var gravity_collision = CollisionShape2D.new()
 	gravity_collision.shape = CircleShape2D.new()
 	gravity_collision.shape.radius = radius + atmosphere_height

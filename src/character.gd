@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 250
 @export var friction: float = 200
 @export var max_speed: float = 80
+@export var jump_power: float = 80
 
 var gravity_areas: Array[GravityArea] = []
 
@@ -59,8 +60,10 @@ func _physics_process(delta: float) -> void:
 				# after a moment, so idk
 				self.velocity -= horizontal_movement
 		
-#		if horizontal_movement.length() > max_speed:
-#			self.velocity -= horizontal_movement - horizontal_movement.limit_length(max_speed)
+		# if horizontal_movement.length() > max_speed:
+		# 	self.velocity -= horizontal_movement - horizontal_movement.limit_length(max_speed)
+		if Input.is_action_just_pressed("jump"):
+			self.velocity += -self.transform.y * jump_power
 	
 	self.move_and_slide()
 	
