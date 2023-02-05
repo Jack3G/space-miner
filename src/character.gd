@@ -82,7 +82,14 @@ func _physics_process(delta: float) -> void:
 		# if horizontal_movement.length() > max_speed:
 		# 	self.velocity -= horizontal_movement - horizontal_movement.limit_length(max_speed)
 		if _coyote_mode and Input.is_action_just_pressed("jump"):
-			self.velocity += -self.transform.y * jump_power
+			var impulse = -self.transform.y * jump_power
+
+			# If the character is moving down cancel that downwards velocity and then add jump.
+			# I.e. walking down slopes doesn't eat jumps
+			if -self.transform.y.dot(self.velocity) < 0:
+				impulse += -self.velocity.project(self.transform.y)
+
+			self.velocity += impulse
 	
 	self.move_and_slide()
 	
