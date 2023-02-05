@@ -6,9 +6,19 @@ extends CharacterBody2D
 @export var jump_power: float = 80
 
 var _gravity_areas: Array[GravityArea] = []
+var _coyote_mode: bool = false
+
+@onready var coyote_timer: Timer = $CoyoteTimer
+
 
 func entered_gravity_area(area: GravityArea) -> void:
 	_gravity_areas.append(area)
+
+
+func _ready() -> void:
+	coyote_timer.one_shot = true
+	coyote_timer.timeout.connect(func():
+		_coyote_mode = false)
 
 func _physics_process(delta: float) -> void:
 	var directional_input = Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -27,10 +37,12 @@ func _physics_process(delta: float) -> void:
 			if a.priority > priority_area.priority:
 				priority_area = a
 		
+
 		var horizontal_movement = self.velocity.project(self.transform.x)
 		# If the player is trying to keep going in the same direction
 		var same_direction: bool = self.velocity.dot(
 			self.transform.x * directional_input.x) > 0
+
 		
 		var rotation_goal: float = wrap(
 			priority_area.get_gravity_point(self.global_position)
@@ -38,6 +50,13 @@ func _physics_process(delta: float) -> void:
 			0, TAU)
 		
 		self.rotation = lerp_angle(self.rotation, rotation_goal + PI/2, 0.8)
+
+
+		if self.is_on_floor():
+			_coyote_mode = true
+		else:
+			if _coyote_mode == true and coyote_timer.is_stopped():
+				coyote_timer.start()
 		
 		# GRAVITY
 		if not self.is_on_floor():
@@ -62,7 +81,7 @@ func _physics_process(delta: float) -> void:
 		
 		# if horizontal_movement.length() > max_speed:
 		# 	self.velocity -= horizontal_movement - horizontal_movement.limit_length(max_speed)
-		if Input.is_action_just_pressed("jump"):
+		if _coyote_mode and Input.is_action_just_pressed("jump"):
 			self.velocity += -self.transform.y * jump_power
 	
 	self.move_and_slide()
