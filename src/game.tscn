@@ -10,9 +10,6 @@ script = ExtResource("1_081lm")
 [node name="Character" parent="." instance=ExtResource("1_v21s0")]
 position = Vector2(-2, -89)
 
-[node name="Camera2D" type="Camera2D" parent="Character"]
-ignore_rotation = false
-
 [node name="Planet" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(14, 50)
 
