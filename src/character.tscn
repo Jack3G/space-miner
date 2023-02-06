@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://b21vfp2hf7k21"]
+[gd_scene load_steps=7 format=3 uid="uid://b21vfp2hf7k21"]
 
 [ext_resource type="Script" path="res://src/character.gd" id="1_rvdxv"]
 [ext_resource type="Texture2D" uid="uid://dov5orwq2gb0d" path="res://icon.svg" id="2_4mw5t"]
@@ -6,6 +6,28 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_opfg1"]
 radius = 8.0
 height = 16.0
+
+[sub_resource type="Gradient" id="Gradient_lxpwo"]
+offsets = PackedFloat32Array(0.549451, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_awjm7"]
+gradient = SubResource("Gradient_lxpwo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_814mn"]
+lifetime_randomness = 0.5
+particle_flag_disable_z = true
+direction = Vector3(1, 1, 0)
+spread = 50.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+damping_min = 2.0
+damping_max = 2.0
+scale_max = 2.0
+color_ramp = SubResource("GradientTexture1D_awjm7")
 
 [node name="Character" type="CharacterBody2D" groups=["characters"]]
 script = ExtResource("1_rvdxv")
@@ -20,3 +42,12 @@ shape = SubResource("CapsuleShape2D_opfg1")
 [node name="CoyoteTimer" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="BoostPackParticles" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_814mn")
+lifetime = 2.0
+one_shot = true
+explosiveness = 1.0
+fixed_fps = 5

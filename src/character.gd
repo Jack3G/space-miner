@@ -4,11 +4,15 @@ extends CharacterBody2D
 @export var friction: float = 200
 @export var max_speed: float = 80
 @export var jump_power: float = 80
+@export var boost_direction_default: Vector2 = Vector2.UP
 
 var _gravity_areas: Array[GravityArea] = []
 var _coyote_mode: bool = false
+# to prevent jumping multiple times in coyote time
+var _jumped: bool = true
 
 @onready var coyote_timer: Timer = $CoyoteTimer
+@onready var boost_particles: GPUParticles2D = $BoostPackParticles
 
 
 func entered_gravity_area(area: GravityArea) -> void:
@@ -31,7 +35,6 @@ func _physics_process(delta: float) -> void:
 				break
 	
 	if not _gravity_areas.is_empty():
-		
 		var priority_area = _gravity_areas[0]
 		for a in _gravity_areas:
 			if a.priority > priority_area.priority:
@@ -54,6 +57,7 @@ func _physics_process(delta: float) -> void:
 
 		if self.is_on_floor():
 			_coyote_mode = true
+			_jumped = false
 		else:
 			if _coyote_mode == true and coyote_timer.is_stopped():
 				coyote_timer.start()
@@ -79,18 +83,36 @@ func _physics_process(delta: float) -> void:
 				# after a moment, so idk
 				self.velocity -= horizontal_movement
 		
-		# if horizontal_movement.length() > max_speed:
-		# 	self.velocity -= horizontal_movement - horizontal_movement.limit_length(max_speed)
-		if _coyote_mode and Input.is_action_just_pressed("jump"):
-			var impulse = -self.transform.y * jump_power
+		# JUMP
+		if Input.is_action_just_pressed("jump"):
+			if _coyote_mode and not _jumped:
+				_jumped = true
+				var impulse = -self.transform.y * jump_power
+				
+				# If the character is moving down cancel that downwards velocity and then add jump.
+				# I.e. walking down slopes doesn't eat jumps
+				if -self.transform.y.dot(self.velocity) < 0:
+					impulse += -self.velocity.project(self.transform.y)
+					
+				self.velocity += impulse
+			else:
+				var input_dir = directional_input
+				if input_dir == Vector2.ZERO:
+					input_dir = boost_direction_default
+					
+				var dir = Vector2.ZERO
+				dir -= input_dir.x * self.transform.x
+				dir -= input_dir.y * self.transform.y
+					
+				boost_particles.process_material.direction.x = dir.x
+				boost_particles.process_material.direction.y = dir.y
 
-			# If the character is moving down cancel that downwards velocity and then add jump.
-			# I.e. walking down slopes doesn't eat jumps
-			if -self.transform.y.dot(self.velocity) < 0:
-				impulse += -self.velocity.project(self.transform.y)
+				boost_particles.emitting = false
+				boost_particles.restart()
+				boost_particles.emitting = true
 
-			self.velocity += impulse
-	
+				self.velocity += input_dir.rotated(self.rotation) * jump_power
+
 	self.move_and_slide()
 	
 	self.up_direction = -self.transform.y

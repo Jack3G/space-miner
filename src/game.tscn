@@ -13,3 +13,10 @@ ignore_rotation = false
 
 [node name="Planet" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(14, 50)
+
+[node name="Planet2" parent="." instance=ExtResource("2_644f5")]
+position = Vector2(357, 52)
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
