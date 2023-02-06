@@ -4,7 +4,7 @@ extends StaticBody2D
 @export var size_curve: Curve
 @export var surface_offset: Noise
 @export var offset_scale: float = 10
-@export var atmosphere_height: float = 80
+@export var atmosphere_height: float = 60
 @export var gravity: float = 200
 
 @export var textures: Array[Texture]
