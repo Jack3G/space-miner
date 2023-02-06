@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://df7l0upmbd058"]
+
+[ext_resource type="FontFile" uid="uid://dqwpy6dvd2twp" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_nm3hb"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yllek"]
+bg_color = Color(0.360784, 0.360784, 0.360784, 1)
+draw_center = false
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.207843, 0.192157, 0.176471, 1)
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5o7u"]
+bg_color = Color(1, 0.34902, 0.207843, 1)
+anti_aliasing = false
+
+[sub_resource type="Theme" id="Theme_47ecp"]
+default_font = ExtResource("1_nm3hb")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_yllek")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_t5o7u")
+
+[sub_resource type="LabelSettings" id="LabelSettings_r4u28"]
+line_spacing = 0.0
+font = ExtResource("1_nm3hb")
+font_size = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_528i3"]
+bg_color = Color(0.196078, 0.615686, 1, 1)
+
+[node name="HUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_47ecp")
+
+[node name="Left" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 2.0
+offset_right = 80.0
+offset_bottom = 42.0
+
+[node name="Label" type="Label" parent="Left"]
+layout_mode = 2
+text = "Space Miner"
+label_settings = SubResource("LabelSettings_r4u28")
+
+[node name="Health" type="ProgressBar" parent="Left"]
+custom_minimum_size = Vector2(75, 3)
+layout_mode = 2
+size_flags_horizontal = 0
+max_value = 1.0
+value = 0.75
+allow_greater = true
+show_percentage = false
+
+[node name="BoostMeter" type="ProgressBar" parent="Left"]
+custom_minimum_size = Vector2(50, 5)
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_528i3")
+max_value = 1.0
+value = 0.5
+show_percentage = false
