@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var jump_power: float = 100
 @export var boost_direction_default: Vector2 = Vector2.UP
 @export var boost_jump_cooldown: float = 1.5
+@export var terminal_velocity: float = 1000
 
 var _gravity_areas: Array[GravityArea] = []
 var _coyote_mode: bool = false
@@ -120,6 +121,8 @@ func _physics_process(delta: float) -> void:
 			boost_particles.emitting = true
 
 			self.velocity += input_dir.rotated(self.rotation) * jump_power
+
+	self.velocity = self.velocity.limit_length(terminal_velocity)
 
 	self.move_and_slide()
 	
