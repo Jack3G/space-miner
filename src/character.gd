@@ -16,6 +16,8 @@ var _can_boost_jump: bool = true
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var boost_particles: GPUParticles2D = $BoostPackParticles
+@onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var sprite: Sprite2D = $Sprite
 
 
 func entered_gravity_area(area: GravityArea) -> void:
@@ -38,8 +40,20 @@ func _physics_process(delta: float) -> void:
 			if _gravity_areas.is_empty():
 				break
 		i += 1
+
+	var on_planet = not _gravity_areas.is_empty()
+
+	# ANIMATIONS
+	if on_planet and directional_input != Vector2.ZERO:
+		animation.current_animation = "walk"
+	else:
+		animation.current_animation = "RESET"
+
+	if directional_input != Vector2.ZERO:
+		sprite.flip_h = directional_input.x < 0
+		
 	
-	if not _gravity_areas.is_empty():
+	if on_planet:
 		var priority_area = _gravity_areas[0]
 		for a in _gravity_areas:
 			if a.priority > priority_area.priority:
@@ -90,7 +104,7 @@ func _physics_process(delta: float) -> void:
 		
 	# JUMP
 	if Input.is_action_just_pressed("jump"):
-		if _coyote_mode and not _jumped and not _gravity_areas.is_empty():
+		if _coyote_mode and not _jumped and on_planet:
 			_jumped = true
 			var impulse = -self.transform.y * jump_power
 			
