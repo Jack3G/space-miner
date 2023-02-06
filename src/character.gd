@@ -123,9 +123,7 @@ func _physics_process(delta: float) -> void:
 			if input_dir == Vector2.ZERO:
 				input_dir = boost_direction_default
 				
-			var dir = Vector2.ZERO
-			dir -= input_dir.x * self.transform.x
-			dir -= input_dir.y * self.transform.y
+			var dir = -input_dir
 				
 			boost_particles.process_material.direction.x = dir.x
 			boost_particles.process_material.direction.y = dir.y
