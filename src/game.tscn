@@ -1,17 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://bfiqxm5d30gqc"]
+[gd_scene load_steps=3 format=3 uid="uid://bfiqxm5d30gqc"]
 
 [ext_resource type="Script" path="res://src/game.gd" id="1_081lm"]
-[ext_resource type="PackedScene" uid="uid://b21vfp2hf7k21" path="res://src/character.tscn" id="1_v21s0"]
 [ext_resource type="PackedScene" uid="uid://b6loo6ok5o7g1" path="res://src/planet.tscn" id="2_644f5"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_081lm")
 
-[node name="Character" parent="." instance=ExtResource("1_v21s0")]
-position = Vector2(-2, -89)
-
 [node name="Planet" parent="." instance=ExtResource("2_644f5")]
-position = Vector2(14, 50)
+position = Vector2(11, 167)
 
 [node name="Planet2" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(357, 52)
@@ -19,3 +15,5 @@ position = Vector2(357, 52)
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="UILayer" type="CanvasLayer" parent="."]

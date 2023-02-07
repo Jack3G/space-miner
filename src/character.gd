@@ -13,6 +13,7 @@ var _coyote_mode: bool = false
 # to prevent jumping multiple times in coyote time
 var _jumped: bool = true
 var _can_boost_jump: bool = true
+var _angular_velocity: float = 0
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var boost_particles: GPUParticles2D = $BoostPackParticles
@@ -66,6 +67,8 @@ func _physics_process(delta: float) -> void:
 			self.transform.x * directional_input.x) > 0
 
 		
+		_angular_velocity = 0
+
 		var rotation_goal: float = wrap(
 			priority_area.get_gravity_point(self.global_position)
 				.angle_to_point(self.global_position),
@@ -101,6 +104,8 @@ func _physics_process(delta: float) -> void:
 				# I think this doesn't work sometimes but it seems to fix itself
 				# after a moment, so idk
 				self.velocity -= horizontal_movement
+	else: # If in space
+		self.rotation += _angular_velocity * delta
 		
 	# JUMP
 	if Input.is_action_just_pressed("jump"):
