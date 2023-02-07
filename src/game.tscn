@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bfiqxm5d30gqc"]
+[gd_scene load_steps=4 format=3 uid="uid://bfiqxm5d30gqc"]
 
 [ext_resource type="Script" path="res://src/game.gd" id="1_081lm"]
 [ext_resource type="PackedScene" uid="uid://b6loo6ok5o7g1" path="res://src/planet.tscn" id="2_644f5"]
+[ext_resource type="Texture2D" uid="uid://c8mfgbygmcv18" path="res://assets/background.png" id="3_yfhl8"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_081lm")
@@ -13,7 +14,13 @@ position = Vector2(11, 167)
 position = Vector2(357, 52)
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+scroll_ignore_camera_zoom = true
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(320, 180)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("3_yfhl8")
+centered = false
 
 [node name="UILayer" type="CanvasLayer" parent="."]
