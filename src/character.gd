@@ -94,7 +94,7 @@ func _physics_process(delta: float) -> void:
 			self.velocity += self.transform.x * directional_input.x * speed * delta
 		
 		# FRICTION
-		if not same_direction or horizontal_movement.length() > max_speed:
+		if (self.is_on_floor() and not same_direction) or horizontal_movement.length() > max_speed:
 			# unless the player is trying to go in the same direction
 			var friction_force = -horizontal_movement.normalized() * \
 				friction * delta
