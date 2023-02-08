@@ -28,10 +28,18 @@ func entered_gravity_area(area: GravityArea) -> void:
 	_gravity_areas.append(area)
 
 
+func get_ui_package() -> Dictionary:
+	return {
+		boost_charge = _boost_charge,
+		boost_charge_max = boost_charge_max,
+	}
+
+
 func _ready() -> void:
 	coyote_timer.one_shot = true
 	coyote_timer.timeout.connect(func():
 		_coyote_mode = false)
+
 
 func _physics_process(delta: float) -> void:
 	var directional_input = Input.get_vector("move_left", "move_right", "move_up", "move_down")

@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://df7l0upmbd058"]
+[gd_scene load_steps=8 format=3 uid="uid://df7l0upmbd058"]
 
 [ext_resource type="FontFile" uid="uid://dqwpy6dvd2twp" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_nm3hb"]
+[ext_resource type="Script" path="res://src/hud.gd" id="2_1208b"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_yllek"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqnyi"]
 bg_color = Color(0.360784, 0.360784, 0.360784, 1)
 draw_center = false
 border_width_left = 1
@@ -16,21 +17,21 @@ expand_margin_right = 1.0
 expand_margin_bottom = 1.0
 anti_aliasing = false
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t5o7u"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6mam"]
 bg_color = Color(1, 0.34902, 0.207843, 1)
 anti_aliasing = false
 
-[sub_resource type="Theme" id="Theme_47ecp"]
+[sub_resource type="Theme" id="Theme_e6e6u"]
 default_font = ExtResource("1_nm3hb")
-ProgressBar/styles/background = SubResource("StyleBoxFlat_yllek")
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_t5o7u")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_rqnyi")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_y6mam")
 
-[sub_resource type="LabelSettings" id="LabelSettings_r4u28"]
+[sub_resource type="LabelSettings" id="LabelSettings_8y0hp"]
 line_spacing = 0.0
 font = ExtResource("1_nm3hb")
 font_size = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_528i3"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ki2y"]
 bg_color = Color(0.196078, 0.615686, 1, 1)
 
 [node name="HUD" type="Control"]
@@ -40,7 +41,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_47ecp")
+theme = SubResource("Theme_e6e6u")
+script = ExtResource("2_1208b")
 
 [node name="Left" type="VBoxContainer" parent="."]
 layout_mode = 0
@@ -52,9 +54,10 @@ offset_bottom = 42.0
 [node name="Label" type="Label" parent="Left"]
 layout_mode = 2
 text = "Space Miner"
-label_settings = SubResource("LabelSettings_r4u28")
+label_settings = SubResource("LabelSettings_8y0hp")
 
 [node name="Health" type="ProgressBar" parent="Left"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 3)
 layout_mode = 2
 size_flags_horizontal = 0
@@ -64,10 +67,11 @@ allow_greater = true
 show_percentage = false
 
 [node name="BoostMeter" type="ProgressBar" parent="Left"]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 5)
 layout_mode = 2
 size_flags_horizontal = 0
-theme_override_styles/fill = SubResource("StyleBoxFlat_528i3")
+theme_override_styles/fill = SubResource("StyleBoxFlat_8ki2y")
 max_value = 1.0
 value = 0.5
 show_percentage = false
