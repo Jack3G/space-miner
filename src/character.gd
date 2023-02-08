@@ -3,17 +3,20 @@ extends CharacterBody2D
 @export var speed: float = 250
 @export var friction: float = 200
 @export var max_speed: float = 80
+@export var terminal_velocity: float = 1000
 @export var jump_power: float = 100
+
 @export var boost_direction_default: Vector2 = Vector2.UP
 @export var boost_jump_cooldown: float = 1.5
-@export var terminal_velocity: float = 1000
+@export var boost_charge_max: float = 50
+@export var boost_recharge_rate: float = 50
 
 var _gravity_areas: Array[GravityArea] = []
 var _coyote_mode: bool = false
+var _angular_velocity: float = 0
 # to prevent jumping multiple times in coyote time
 var _jumped: bool = true
-var _can_boost_jump: bool = true
-var _angular_velocity: float = 0
+var _boost_charge: float = boost_charge_max
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var boost_particles: GPUParticles2D = $BoostPackParticles
@@ -52,8 +55,10 @@ func _physics_process(delta: float) -> void:
 
 	if directional_input != Vector2.ZERO:
 		sprite.flip_h = directional_input.x < 0
-		
-	
+
+	_boost_charge += boost_recharge_rate * delta
+	_boost_charge = clampf(_boost_charge, 0, boost_charge_max)
+
 	if on_planet:
 		var priority_area = _gravity_areas[0]
 		for a in _gravity_areas:
@@ -119,10 +124,8 @@ func _physics_process(delta: float) -> void:
 				impulse += -self.velocity.project(self.transform.y)
 				
 			self.velocity += impulse
-		elif _can_boost_jump:
-			_can_boost_jump = false
-			get_tree().create_timer(boost_jump_cooldown, false).timeout.connect(func():
-				_can_boost_jump = true)
+		elif _boost_charge >= boost_charge_max:
+			_boost_charge = 0
 
 			var input_dir = directional_input
 			if input_dir == Vector2.ZERO:
