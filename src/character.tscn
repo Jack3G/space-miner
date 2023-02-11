@@ -118,9 +118,3 @@ playback_default_blend_time = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_qk2mt")
 }
-
-[node name="Camera" type="Camera2D" parent="."]
-ignore_rotation = false
-rotation_smoothing_enabled = true
-rotation_smoothing_speed = 10.0
-editor_draw_drag_margin = true

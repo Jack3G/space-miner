@@ -13,13 +13,8 @@ position = Vector2(11, 167)
 [node name="Planet2" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(357, 52)
 
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-scroll_ignore_camera_zoom = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-motion_mirroring = Vector2(320, 180)
-
-[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+[node name="Background" type="Sprite2D" parent="."]
+z_index = -50
 texture = ExtResource("3_yfhl8")
 centered = false
 
