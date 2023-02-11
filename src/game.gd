@@ -6,6 +6,7 @@ var _camera: Camera2D = null
 
 @onready var ui_layer: CanvasLayer = $UILayer
 @onready var background: Sprite2D = $Background
+@onready var player_start_pos: Node2D = $PlayerStartPos
 
 # this is broken and I don't know how to make it work :(
 func get_camera_top_left(camera: Camera2D) -> Vector2:
@@ -31,6 +32,7 @@ func get_camera_top_left(camera: Camera2D) -> Vector2:
 
 func _ready() -> void:
 	var new_character = preload("res://src/character.tscn").instantiate()
+	new_character.position = player_start_pos.position
 	_character = new_character
 	self.add_child(new_character)
 

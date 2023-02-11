@@ -7,8 +7,14 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("1_081lm")
 
-[node name="Planet" parent="." instance=ExtResource("2_644f5")]
+[node name="StartingPlanet" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(11, 167)
+
+[node name="MaxSize" parent="StartingPlanet" index="0"]
+position = Vector2(101, 41)
+
+[node name="MinSize" parent="StartingPlanet" index="1"]
+position = Vector2(94, 38)
 
 [node name="Planet2" parent="." instance=ExtResource("2_644f5")]
 position = Vector2(357, 52)
@@ -19,3 +25,8 @@ texture = ExtResource("3_yfhl8")
 centered = false
 
 [node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="PlayerStartPos" type="Marker2D" parent="."]
+position = Vector2(110, 67)
+
+[editable path="StartingPlanet"]

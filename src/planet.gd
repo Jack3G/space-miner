@@ -5,6 +5,8 @@ extends StaticBody2D
 @export var surface_offset: Noise
 @export var offset_scale: float = 10
 @export var atmosphere_height: float = 60
+@export var atmosphere_points: int = 64
+@export var atmosphere_color: Color
 @export var gravity: float = 200
 
 @export var textures: Array[Texture]
@@ -52,3 +54,14 @@ func _ready() -> void:
 	
 	gravity_area.add_child(gravity_collision)
 	self.add_child(gravity_area)
+
+
+	var atmosphere: Polygon2D = Polygon2D.new()
+	var atmo_poly: Array[Vector2] = []
+	for i in range(atmosphere_points):
+		var direction = Vector2.from_angle((i as float / atmosphere_points as float) * TAU)
+		atmo_poly.append(direction * (radius + atmosphere_height))
+	atmosphere.polygon = PackedVector2Array(atmo_poly)
+	atmosphere.color = atmosphere_color
+	atmosphere.z_index = -5
+	self.add_child(atmosphere)
