@@ -5,16 +5,17 @@
 [ext_resource type="Texture2D" uid="uid://c4ppp7xfipkc5" path="res://assets/brown_asteroid_tiling.png" id="2_f742d"]
 
 [sub_resource type="Curve" id="Curve_1qhq4"]
-_data = [Vector2(0, 0), 0.0, 2.91378, 0, 0, Vector2(0.5, 0.509091), 0.0727272, 0.0727272, 0, 0, Vector2(1, 1), 3.02727, 0.0, 0, 0]
+_data = [Vector2(0, 0), 0.0, 2.91378, 0, 0, Vector2(0.5, 0.509091), 4.73766, 4.73766, 0, 0, Vector2(1, 1), 3.02727, 0.0, 0, 0]
 point_count = 3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0jixa"]
+fractal_octaves = 2
 
 [node name="Planet" type="StaticBody2D" groups=["planets"]]
 script = ExtResource("1_58q8v")
 size_curve = SubResource("Curve_1qhq4")
 surface_offset = SubResource("FastNoiseLite_0jixa")
-atmosphere_color = Color(0.196078, 0.623529, 0.721569, 0.619608)
+atmosphere_color = Color(0.580392, 0.772549, 0.819608, 0.619608)
 textures = Array[Texture]([ExtResource("2_f742d")])
 
 [node name="MaxSize" type="Marker2D" parent="."]
