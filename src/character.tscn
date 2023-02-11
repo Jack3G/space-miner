@@ -93,6 +93,15 @@ _data = {
 
 [node name="Character" type="CharacterBody2D" groups=["characters"]]
 script = ExtResource("1_rvdxv")
+speed = null
+friction = null
+max_speed = null
+terminal_velocity = null
+jump_power = null
+boost_direction_default = null
+boost_jump_cooldown = null
+boost_charge_max = null
+boost_recharge_rate = null
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_jlm42")
