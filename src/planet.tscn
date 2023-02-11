@@ -10,7 +10,7 @@ point_count = 3
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_0jixa"]
 
-[node name="Planet" type="StaticBody2D"]
+[node name="Planet" type="StaticBody2D" groups=["planets"]]
 script = ExtResource("1_58q8v")
 size_curve = SubResource("Curve_1qhq4")
 surface_offset = SubResource("FastNoiseLite_0jixa")

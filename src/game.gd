@@ -1,5 +1,8 @@
 extends Node2D
 
+@export var planet_distance_min: float = 320
+@export var planet_spawn_attempts: int = 50
+
 var _character: CharacterBody2D = null
 var _hud: Control = null
 var _camera: Camera2D = null
@@ -7,6 +10,7 @@ var _camera: Camera2D = null
 @onready var ui_layer: CanvasLayer = $UILayer
 @onready var background: Sprite2D = $Background
 @onready var player_start_pos: Node2D = $PlayerStartPos
+@onready var planet_spawn_area: Area2D = $PlanetSpawnArea
 
 # this is broken and I don't know how to make it work :(
 func get_camera_top_left(camera: Camera2D) -> Vector2:
@@ -31,6 +35,7 @@ func get_camera_top_left(camera: Camera2D) -> Vector2:
 	return smallest
 
 func _ready() -> void:
+	# Instantiate game objects
 	var new_character = preload("res://src/character.tscn").instantiate()
 	new_character.position = player_start_pos.position
 	_character = new_character
@@ -49,6 +54,7 @@ func _ready() -> void:
 	ui_layer.add_child(new_hud)
 
 
+	# Setup background
 	background.centered = false
 	var bg_rect = background.get_rect()
 	var visible_diagonal_length = (get_viewport_rect().size * (Vector2.ONE / _camera.zoom)).length()
@@ -68,6 +74,39 @@ func _ready() -> void:
 
 	for node in bg_nodes_buffer:
 		background.add_child(node)
+
+
+	# Generate planets
+	var collision_shape: CollisionShape2D = planet_spawn_area.get_node("CollisionShape2D")
+	assert(collision_shape.shape is RectangleShape2D)
+	var half_size: Vector2 = collision_shape.shape.size / 2
+
+	var planet_seeds: Array[Vector2] = []
+	for i in range(planet_spawn_attempts):
+		var new_seed = Vector2(
+			randf_range(collision_shape.position.x - half_size.x,
+				collision_shape.position.x + half_size.x),
+			randf_range(collision_shape.position.y - half_size.y,
+				collision_shape.position.y + half_size.y),
+		)
+
+		var has_space = true
+		for planet in get_tree().get_nodes_in_group("planets"):
+			var distance = planet.position.distance_to(new_seed)
+			if distance < planet_distance_min:
+				has_space = false
+		for p_seed in planet_seeds:
+			var distance = p_seed.distance_to(new_seed)
+			if distance < planet_distance_min:
+				has_space = false
+
+		if has_space:
+			planet_seeds.append(new_seed)
+
+	for planet_seed in planet_seeds:
+		var new_planet = preload("res://src/planet.tscn").instantiate()
+		new_planet.position = planet_seed
+		self.add_child(new_planet)
 
 
 func _process(delta: float) -> void:
