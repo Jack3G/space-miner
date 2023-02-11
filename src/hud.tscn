@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://df7l0upmbd058"]
+[gd_scene load_steps=9 format=3 uid="uid://df7l0upmbd058"]
 
 [ext_resource type="FontFile" uid="uid://dqwpy6dvd2twp" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_nm3hb"]
 [ext_resource type="Script" path="res://src/hud.gd" id="2_1208b"]
+[ext_resource type="Texture2D" uid="uid://mbdj8jvx2jjy" path="res://assets/radar.png" id="3_uyjy6"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqnyi"]
 bg_color = Color(0.360784, 0.360784, 0.360784, 1)
@@ -75,3 +76,15 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_8ki2y")
 max_value = 1.0
 value = 0.5
 show_percentage = false
+
+[node name="Radar" type="TextureRect" parent="."]
+unique_name_in_owner = true
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_top = 5.0
+offset_right = -5.0
+grow_horizontal = 0
+texture = ExtResource("3_uyjy6")

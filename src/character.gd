@@ -29,9 +29,15 @@ func entered_gravity_area(area: GravityArea) -> void:
 
 
 func get_ui_package() -> Dictionary:
+	var blips: Array[Vector2] = []
+	for p in get_tree().get_nodes_in_group("planets"):
+		blips.append((p.global_position - self.global_position
+			).rotated(-self.global_rotation))
+
 	return {
 		boost_charge = _boost_charge,
 		boost_charge_max = boost_charge_max,
+		blips = blips,
 	}
 
 
