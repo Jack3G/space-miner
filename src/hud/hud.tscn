@@ -1,34 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://df7l0upmbd058"]
+[gd_scene load_steps=8 format=3 uid="uid://c5ncalq1eqb8o"]
 
-[ext_resource type="FontFile" uid="uid://dqwpy6dvd2twp" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_nm3hb"]
-[ext_resource type="Script" path="res://src/hud.gd" id="2_1208b"]
-[ext_resource type="LabelSettings" uid="uid://dvas6t8jbtuor" path="res://src/hud_label_settings.tres" id="3_3xwnp"]
-[ext_resource type="Texture2D" uid="uid://crkemll2cnpc" path="res://src/radar.tres" id="3_6uk1t"]
-[ext_resource type="Texture2D" uid="uid://duwohs5riej6x" path="res://assets/O2.png" id="3_jaodg"]
-[ext_resource type="Texture2D" uid="uid://b8xsmn0u5u61p" path="res://assets/fuel.png" id="4_mwx8a"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqnyi"]
-bg_color = Color(0.360784, 0.360784, 0.360784, 1)
-draw_center = false
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.207843, 0.192157, 0.176471, 1)
-expand_margin_left = 1.0
-expand_margin_top = 1.0
-expand_margin_right = 1.0
-expand_margin_bottom = 1.0
-anti_aliasing = false
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y6mam"]
-bg_color = Color(1, 0.34902, 0.207843, 1)
-anti_aliasing = false
-
-[sub_resource type="Theme" id="Theme_e6e6u"]
-default_font = ExtResource("1_nm3hb")
-ProgressBar/styles/background = SubResource("StyleBoxFlat_rqnyi")
-ProgressBar/styles/fill = SubResource("StyleBoxFlat_y6mam")
+[ext_resource type="Theme" uid="uid://cgb6s4wgbu4ma" path="res://src/theme.tres" id="1_o3lpt"]
+[ext_resource type="Script" path="res://src/hud/hud.gd" id="2_lht0a"]
+[ext_resource type="LabelSettings" uid="uid://dvas6t8jbtuor" path="res://src/hud/hud_label_settings.tres" id="3_u37ub"]
+[ext_resource type="Texture2D" uid="uid://duwohs5riej6x" path="res://assets/O2.png" id="4_jpvpy"]
+[ext_resource type="Texture2D" uid="uid://b8xsmn0u5u61p" path="res://assets/fuel.png" id="5_1xupg"]
+[ext_resource type="Texture2D" uid="uid://crkemll2cnpc" path="res://src/hud/radar.tres" id="6_pfp4w"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ki2y"]
 bg_color = Color(0.196078, 0.615686, 1, 1)
@@ -40,8 +17,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_e6e6u")
-script = ExtResource("2_1208b")
+theme = ExtResource("1_o3lpt")
+script = ExtResource("2_lht0a")
 
 [node name="TopLeft" type="GridContainer" parent="."]
 layout_mode = 2
@@ -57,12 +34,12 @@ layout_mode = 2
 [node name="Title" type="Label" parent="TopLeft"]
 layout_mode = 2
 text = "Space Miner"
-label_settings = ExtResource("3_3xwnp")
+label_settings = ExtResource("3_u37ub")
 
 [node name="TextureRect" type="TextureRect" parent="TopLeft"]
 layout_mode = 2
 size_flags_horizontal = 8
-texture = ExtResource("3_jaodg")
+texture = ExtResource("4_jpvpy")
 stretch_mode = 2
 
 [node name="Health" type="ProgressBar" parent="TopLeft"]
@@ -79,7 +56,7 @@ show_percentage = false
 [node name="Boost" type="TextureRect" parent="TopLeft"]
 layout_mode = 2
 size_flags_horizontal = 8
-texture = ExtResource("4_mwx8a")
+texture = ExtResource("5_1xupg")
 
 [node name="BoostMeter" type="ProgressBar" parent="TopLeft"]
 unique_name_in_owner = true
@@ -101,7 +78,7 @@ anchor_right = 1.0
 offset_top = 5.0
 offset_right = -5.0
 grow_horizontal = 0
-texture = ExtResource("3_6uk1t")
+texture = ExtResource("6_pfp4w")
 
 [node name="BottomLeft" type="GridContainer" parent="."]
 layout_mode = 1
@@ -116,14 +93,14 @@ columns = 2
 [node name="Label" type="Label" parent="BottomLeft"]
 layout_mode = 2
 text = "Gold: "
-label_settings = ExtResource("3_3xwnp")
+label_settings = ExtResource("3_u37ub")
 horizontal_alignment = 2
 
 [node name="Gold" type="Label" parent="BottomLeft"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "asd"
-label_settings = ExtResource("3_3xwnp")
+label_settings = ExtResource("3_u37ub")
 
 [node name="Polygon2D" type="Polygon2D" parent="BottomLeft"]
 show_behind_parent = true

@@ -11,8 +11,8 @@ extends StaticBody2D
 
 @export var rock_spawn_chance: float = 0.08
 @export var rocks: Array[PackedScene] = [
-	preload("res://src/gold_rock.tscn"),
-	preload("res://src/oxygen_rock.tscn"),
+	preload("res://src/rocks/gold_rock.tscn"),
+	preload("res://src/rocks/oxygen_rock.tscn"),
 ]
 
 @export var textures: Array[Texture]

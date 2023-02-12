@@ -23,6 +23,7 @@ var _pick_has_broken: bool = false
 var _boost_charge: float = boost_charge_max
 var _oxygen: float = oxygen_max
 var _gold: int = 0
+var _creation_time: int = Time.get_ticks_msec()
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var boost_particles: GPUParticles2D = $BoostPackParticles
@@ -54,6 +55,8 @@ func get_ui_package() -> Dictionary:
 
 		gold = _gold,
 		blips = blips,
+
+		game_time = Time.get_ticks_msec() - _creation_time
 	}
 
 func _on_pick_area_entered(area: Area2D) -> void:

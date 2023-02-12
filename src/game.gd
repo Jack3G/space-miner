@@ -34,11 +34,21 @@ func get_camera_top_left(camera: Camera2D) -> Vector2:
 
 	return smallest
 
+func _on_character_died() -> void:
+	var ui_package = _character.get_ui_package()
+
+	var new_game_over = preload("res://src/game_over.tscn").instantiate()
+	new_game_over.load_ui_package(ui_package)
+	get_tree().get_root().add_child(new_game_over)
+
+	self.queue_free()
+
 func _ready() -> void:
 	# Instantiate game objects
 	var new_character = preload("res://src/character.tscn").instantiate()
 	new_character.position = player_start_pos.position
 	_character = new_character
+	_character.died.connect(_on_character_died)
 	self.add_child(new_character)
 
 	var new_camera = Camera2D.new()
@@ -49,7 +59,7 @@ func _ready() -> void:
 	_character.add_child(new_camera)
 	_camera.enabled = true
 
-	var new_hud = preload("res://src/hud.tscn").instantiate()
+	var new_hud = preload("res://src/hud/hud.tscn").instantiate()
 	_hud = new_hud
 	ui_layer.add_child(new_hud)
 

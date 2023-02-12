@@ -1,7 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://bu4281oblu858"]
+[gd_scene load_steps=9 format=3 uid="uid://cq64jmhqonjm7"]
 
-[ext_resource type="Script" path="res://src/rock.gd" id="1_4bcuw"]
-[ext_resource type="Texture2D" uid="uid://c0dd1f3nh8lip" path="res://assets/rock3.png" id="4_apqi3"]
+[ext_resource type="Script" path="res://src/rocks/rock.gd" id="1_g0b0e"]
+[ext_resource type="Texture2D" uid="uid://c0dd1f3nh8lip" path="res://assets/rock3.png" id="2_qedmc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wlnrb"]
 size = Vector2(28, 14)
@@ -40,8 +40,8 @@ color = Color(0.631373, 0.886275, 0.968627, 0.682353)
 color_ramp = SubResource("GradientTexture1D_u5mvn")
 
 [node name="OxygenRock" type="Area2D" groups=["rocks"]]
-script = ExtResource("1_4bcuw")
-textures = Array[Texture2D]([ExtResource("4_apqi3")])
+script = ExtResource("1_g0b0e")
+textures = Array[Texture2D]([ExtResource("2_qedmc")])
 drops = {
 1: 50
 }
@@ -52,7 +52,7 @@ shape = SubResource("RectangleShape2D_wlnrb")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, -7)
-texture = ExtResource("4_apqi3")
+texture = ExtResource("2_qedmc")
 
 [node name="BreakParticles" type="GPUParticles2D" parent="."]
 position = Vector2(0, -7)
