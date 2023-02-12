@@ -62,7 +62,8 @@ layout_mode = 2
 text = "Time Spent alive: there was no time?"
 horizontal_alignment = 1
 
-[node name="Button" type="Button" parent="."]
+[node name="MenuButton" type="Button" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5

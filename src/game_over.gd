@@ -12,6 +12,7 @@ var _duration_text: String = ""
 
 @onready var gold: Label = %Gold
 @onready var duration: Label = %Duration
+@onready var menu_button: Button = %MenuButton
 
 
 func load_ui_package(package: Dictionary) -> void:
