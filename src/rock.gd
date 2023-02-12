@@ -26,4 +26,7 @@ func break_rock() -> Dictionary:
 	break_particles.emitting = true
 	sprite.visible = false
 	collision.set_deferred("disabled", true)
+
+	get_tree().create_timer(break_particles.lifetime).timeout.connect(func():
+		self.queue_free())
 	return drops

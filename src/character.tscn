@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://b21vfp2hf7k21"]
+[gd_scene load_steps=15 format=3 uid="uid://b21vfp2hf7k21"]
 
 [ext_resource type="Script" path="res://src/character.gd" id="1_rvdxv"]
 [ext_resource type="Texture2D" uid="uid://bkfllh02oan4o" path="res://assets/player.png" id="2_jlm42"]
+[ext_resource type="Texture2D" uid="uid://b0vtcgs3s5r0n" path="res://assets/pickaxe.png" id="3_2hy0a"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l1cqh"]
 radius = 8.0
@@ -91,17 +92,96 @@ _data = {
 "walk": SubResource("Animation_ynqmi")
 }
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4ql6j"]
+radius = 3.60555
+
+[sub_resource type="Animation" id="Animation_3uor7"]
+resource_name = "swing"
+length = 1.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.7, 0.9, 1.1),
+"transitions": PackedFloat32Array(1, 1, 0.353553, 1),
+"update": 0,
+"values": [Vector2(4, -5), Vector2(3, -6), Vector2(6, -3), Vector2(7, 3)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.7, 0.9, 1.1),
+"transitions": PackedFloat32Array(1, 1, 0.353553, 1),
+"update": 0,
+"values": [-0.0285998, -0.359833, 0.325714, 1.01845]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitArea/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.8, 1.1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_02dka"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.25381]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HitArea/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dpngt"]
+_data = {
+"RESET": SubResource("Animation_02dka"),
+"swing": SubResource("Animation_3uor7")
+}
+
 [node name="Character" type="CharacterBody2D" groups=["characters"]]
 script = ExtResource("1_rvdxv")
-speed = null
-friction = null
-max_speed = null
-terminal_velocity = null
-jump_power = null
-boost_direction_default = null
-boost_jump_cooldown = null
-boost_charge_max = null
-boost_recharge_rate = null
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_jlm42")
@@ -127,3 +207,29 @@ playback_default_blend_time = 0.5
 libraries = {
 "": SubResource("AnimationLibrary_qk2mt")
 }
+
+[node name="PickContainer" type="Node2D" parent="."]
+
+[node name="Pickaxe" type="Node2D" parent="PickContainer"]
+show_behind_parent = true
+position = Vector2(0, 5)
+rotation = -1.25381
+
+[node name="Sprite2D" type="Sprite2D" parent="PickContainer/Pickaxe"]
+position = Vector2(6, -6)
+texture = ExtResource("3_2hy0a")
+
+[node name="HitArea" type="Area2D" parent="PickContainer/Pickaxe"]
+position = Vector2(10, -10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickContainer/Pickaxe/HitArea"]
+position = Vector2(-3.17909, -1.06685)
+shape = SubResource("CircleShape2D_4ql6j")
+disabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PickContainer/Pickaxe"]
+playback_default_blend_time = 0.25
+libraries = {
+"": SubResource("AnimationLibrary_dpngt")
+}
+blend_times = [&"swing", &"swing", 0.5]

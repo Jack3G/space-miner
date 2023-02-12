@@ -65,7 +65,6 @@ width = 4
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ug4dw"]
 particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
-gravity = Vector3(0, 98, 0)
 initial_velocity_min = 20.0
 initial_velocity_max = 50.0
 orbit_velocity_min = 0.0

@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @export var speed: float = 250
-@export var friction: float = 200
+@export var friction: float = 400
 @export var max_speed: float = 80
 @export var terminal_velocity: float = 1000
 @export var jump_power: float = 100
@@ -10,18 +10,28 @@ extends CharacterBody2D
 @export var boost_jump_cooldown: float = 1.5
 @export var boost_charge_max: float = 50
 @export var boost_recharge_rate: float = 50
+@export var oxygen_max: float = 100
 
 var _gravity_areas: Array[GravityArea] = []
 var _coyote_mode: bool = false
 var _angular_velocity: float = 0
 # to prevent jumping multiple times in coyote time
 var _jumped: bool = true
+var _pick_has_broken: bool = false
+
 var _boost_charge: float = boost_charge_max
+var _oxygen: float = oxygen_max
+var _gold: int = 0
 
 @onready var coyote_timer: Timer = $CoyoteTimer
 @onready var boost_particles: GPUParticles2D = $BoostPackParticles
 @onready var animation: AnimationPlayer = $AnimationPlayer
 @onready var sprite: Sprite2D = $Sprite
+
+@onready var pick_container: Node2D = $PickContainer
+@onready var pickaxe: Node2D = $PickContainer/Pickaxe
+@onready var pickaxe_area: Area2D = $PickContainer/Pickaxe/HitArea
+@onready var pickaxe_anim: AnimationPlayer = $PickContainer/Pickaxe/AnimationPlayer
 
 
 func entered_gravity_area(area: GravityArea) -> void:
@@ -37,6 +47,10 @@ func get_ui_package() -> Dictionary:
 	return {
 		boost_charge = _boost_charge,
 		boost_charge_max = boost_charge_max,
+		oxygen = _oxygen,
+		oxygen_max = oxygen_max,
+
+		gold = _gold,
 		blips = blips,
 	}
 
@@ -45,6 +59,12 @@ func _ready() -> void:
 	coyote_timer.one_shot = true
 	coyote_timer.timeout.connect(func():
 		_coyote_mode = false)
+
+	pickaxe_area.area_entered.connect(func(area: Area2D):
+		if area.is_in_group("rocks") and not _pick_has_broken:
+			_pick_has_broken = true
+			pickaxe_anim.current_animation = "RESET"
+			area.break_rock())
 
 
 func _physics_process(delta: float) -> void:
@@ -67,11 +87,24 @@ func _physics_process(delta: float) -> void:
 	else:
 		animation.current_animation = "RESET"
 
-	if directional_input != Vector2.ZERO:
-		sprite.flip_h = directional_input.x < 0
+	if pickaxe_anim.current_animation == "":
+		pickaxe_anim.current_animation = "RESET"
+
+	if directional_input.x != 0:
+		var dir = sign(directional_input.x)
+		sprite.scale.x = dir
+		pick_container.scale.x = dir
 
 	_boost_charge += boost_recharge_rate * delta
 	_boost_charge = clampf(_boost_charge, 0, boost_charge_max)
+
+	var pick_anim_ready = pickaxe_anim.current_animation != "swing"
+	if Input.is_action_pressed("swing") and pick_anim_ready:
+		pickaxe_anim.current_animation = "swing"
+		_pick_has_broken = false
+		pickaxe_anim.animation_finished.connect(func(anim_name: StringName):
+			pickaxe_anim.current_animation = "RESET")
+
 
 	if on_planet:
 		var priority_area = _gravity_areas[0]
@@ -92,7 +125,7 @@ func _physics_process(delta: float) -> void:
 			priority_area.get_gravity_point(self.global_position)
 				.angle_to_point(self.global_position),
 			0, TAU)
-		
+
 		self.rotation = lerp_angle(self.rotation, rotation_goal + PI/2, 0.3)
 
 

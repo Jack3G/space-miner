@@ -13,9 +13,13 @@ var _blips: Array[Vector2] = []
 func load_ui_package(package: Dictionary) -> void:
 	if package.boost_charge_max:
 		boost_meter.max_value = package.boost_charge_max
-
 	if package.boost_charge:
 		boost_meter.value = package.boost_charge
+
+	if package.oxygen_max:
+		health_bar.max_value = package.oxygen_max
+	if package.oxygen:
+		health_bar.value = package.oxygen
 
 	_blips = package.blips
 
