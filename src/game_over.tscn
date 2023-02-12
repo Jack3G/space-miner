@@ -1,11 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl4pmx5dfnb62"]
+[gd_scene load_steps=8 format=3 uid="uid://dl4pmx5dfnb62"]
 
 [ext_resource type="Theme" uid="uid://cgb6s4wgbu4ma" path="res://src/theme.tres" id="1_0eyqg"]
 [ext_resource type="Texture2D" uid="uid://c8mfgbygmcv18" path="res://assets/background.png" id="1_chwuh"]
 [ext_resource type="Script" path="res://src/game_over.gd" id="2_at506"]
 [ext_resource type="AudioStream" uid="uid://cmxnkwem4bwtn" path="res://addons/kenney_interface_sounds/scroll_003.wav" id="4_oipre"]
+[ext_resource type="AudioStream" uid="uid://d1jw0nihemkht" path="res://assets/pickupCoin.wav" id="5_slrbs"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gvqps"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ycy5l"]
+font_color = Color(0.309804, 0.952941, 0.690196, 1)
 
 [node name="GameOver" type="Control"]
 layout_mode = 3
@@ -63,6 +67,16 @@ layout_mode = 2
 text = "Time Spent alive: there was no time?"
 horizontal_alignment = 1
 
+[node name="Highscore" type="Label" parent="CenterVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = " NEW HIGH SCORE!!!"
+label_settings = SubResource("LabelSettings_ycy5l")
+horizontal_alignment = 1
+vertical_alignment = 1
+visible_characters = 1
+visible_ratio = 0.0555556
+
 [node name="MenuButton" type="Button" parent="."]
 unique_name_in_owner = true
 layout_mode = 1
@@ -81,3 +95,6 @@ text = "BACK TO MENU"
 
 [node name="TextScroll" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_oipre")
+
+[node name="HighscoreSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_slrbs")
