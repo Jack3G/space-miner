@@ -6,43 +6,14 @@
 [ext_resource type="Texture2D" uid="uid://bkfllh02oan4o" path="res://assets/player.png" id="4_qmg6k"]
 [ext_resource type="AudioStream" uid="uid://c84ojpf6ha0ga" path="res://addons/kenney_interface_sounds/confirmation_002.wav" id="5_5fau8"]
 
-[sub_resource type="Animation" id="Animation_4n3ky"]
-resource_name = "he orbit"
-length = 20.0
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FloatingSpaceMan:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = false
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 10),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(292, 197), Vector2(31, -20)]
-}
+[sub_resource type="CircleShape2D" id="CircleShape2D_e0f33"]
+radius = 8.0
 
-[sub_resource type="Animation" id="Animation_thth7"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("FloatingSpaceMan:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.001),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(342, 165), Vector2(87, 75)]
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_btjko"]
+size = Vector2(340, 20)
 
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_e4pst"]
-_data = {
-"RESET": SubResource("Animation_thth7"),
-"he orbit": SubResource("Animation_4n3ky")
-}
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya3e1"]
+size = Vector2(20, 200)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -54,10 +25,16 @@ grow_vertical = 2
 theme = ExtResource("1_5xkjv")
 script = ExtResource("1_7ui5b")
 
-[node name="FloatingSpaceMan" type="Sprite2D" parent="."]
+[node name="FloatingSpaceMan" type="CharacterBody2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(342, 165)
+position = Vector2(60, 52)
+motion_mode = 1
+
+[node name="FloatingSpaceMan" type="Sprite2D" parent="FloatingSpaceMan"]
 texture = ExtResource("4_qmg6k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FloatingSpaceMan"]
+shape = SubResource("CircleShape2D_e0f33")
 
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
@@ -109,11 +86,23 @@ focus_previous = NodePath("../PlayButton")
 disabled = true
 text = "OPTIONS"
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-playback_default_blend_time = 1.0
-libraries = {
-"": SubResource("AnimationLibrary_e4pst")
-}
-
 [node name="PlayPressed" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_5fau8")
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, 0)
+shape = SubResource("RectangleShape2D_btjko")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
+position = Vector2(0, 90)
+shape = SubResource("RectangleShape2D_ya3e1")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
+position = Vector2(320, 90)
+shape = SubResource("RectangleShape2D_ya3e1")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+position = Vector2(160, 180)
+shape = SubResource("RectangleShape2D_btjko")
