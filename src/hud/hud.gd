@@ -10,6 +10,7 @@ var _blips: Array[Vector2] = []
 @onready var boost_meter: ProgressBar = %BoostMeter
 @onready var radar: TextureRect = %Radar
 @onready var gold: Label = %Gold
+@onready var exit_prompt: Control = %ExitPrompt
 
 func load_ui_package(package: Dictionary) -> void:
 	if package.has("boost_charge_max"):

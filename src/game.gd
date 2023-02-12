@@ -2,10 +2,13 @@ extends Node2D
 
 @export var planet_distance_min: float = 320
 @export var planet_spawn_attempts: int = 50
+@export var exit_time: float = 3
 
 var _character: CharacterBody2D = null
 var _hud: Control = null
 var _camera: Camera2D = null
+
+var _exit_pressed_once: bool = false
 
 @onready var ui_layer: CanvasLayer = $UILayer
 @onready var background: Sprite2D = $Background
@@ -37,7 +40,7 @@ func get_camera_top_left(camera: Camera2D) -> Vector2:
 func _on_character_died() -> void:
 	var ui_package = _character.get_ui_package()
 
-	var new_game_over = preload("res://src/game_over.tscn").instantiate()
+	var new_game_over = load("res://src/game_over.tscn").instantiate()
 	new_game_over.load_ui_package(ui_package)
 	get_tree().get_root().add_child(new_game_over)
 
@@ -126,3 +129,14 @@ func _process(delta: float) -> void:
 	# temporary (permanent) hack because I cant get the top left of the camera
 	background.position = (_camera.global_position - get_viewport_rect().size * 1.5
 		).snapped(background.get_rect().size)
+
+	if Input.is_action_just_pressed("exit"):
+		if _exit_pressed_once:
+			get_tree().get_root().add_child(load("res://src/main_menu.tscn").instantiate())
+			self.queue_free()
+		else:
+			_exit_pressed_once = true
+			_hud.exit_prompt.visible = true
+			get_tree().create_timer(exit_time).timeout.connect(func():
+				_exit_pressed_once = false
+				_hud.exit_prompt.visible = false)

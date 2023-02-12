@@ -107,3 +107,28 @@ show_behind_parent = true
 position = Vector2(-10, -160)
 color = Color(0.0705882, 1, 0.380392, 0.176471)
 polygon = PackedVector2Array(-30, 145, 61, 145, 77, 160, 77, 198, -30, 197)
+
+[node name="ExitPrompt" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -42.0
+offset_right = 42.0
+offset_bottom = 20.0
+grow_horizontal = 2
+color = Color(0.266667, 0.266667, 0.266667, 0.607843)
+
+[node name="Label" type="Label" parent="ExitPrompt"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "press again to exit"
+label_settings = ExtResource("3_u37ub")
+horizontal_alignment = 1
+vertical_alignment = 1

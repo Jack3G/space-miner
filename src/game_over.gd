@@ -25,17 +25,23 @@ func load_ui_package(package: Dictionary) -> void:
 		var minutes = floorf(seconds / 60)
 		var hours = floorf(minutes / 60)
 
+		seconds -= minutes * 60
+		seconds -= hours * 60 * 60
+
 		var str_hours = ""
 		if hours > 0:
 			str_hours = str(hours) + ":"
-		var time = str_hours + str(minutes) + ":" + str(floorf(seconds))
+		var time = str_hours + str(minutes) + ":" + str(seconds)
 
 		_duration_text = duration_prefix + str(time)
 		_characters_in_duration = str(time).length()
 
 func _ready() -> void:
 	menu_button.pressed.connect(func():
-		get_tree().change_scene_to_packed(preload("res://src/main_menu.tscn")))
+		get_tree().get_root().add_child(load("res://src/main_menu.tscn").instantiate())
+		self.queue_free())
+
+	menu_button.grab_focus.call_deferred()
 	
 	gold.text = _gold_text
 	duration.text = _duration_text

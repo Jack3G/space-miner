@@ -1,0 +1,115 @@
+[gd_scene load_steps=8 format=3 uid="uid://bql4t7bonh67b"]
+
+[ext_resource type="Theme" uid="uid://cgb6s4wgbu4ma" path="res://src/theme.tres" id="1_5xkjv"]
+[ext_resource type="Script" path="res://src/main_menu.gd" id="1_7ui5b"]
+[ext_resource type="Texture2D" uid="uid://c8mfgbygmcv18" path="res://assets/background.png" id="1_186hu"]
+[ext_resource type="Texture2D" uid="uid://bkfllh02oan4o" path="res://assets/player.png" id="4_qmg6k"]
+
+[sub_resource type="Animation" id="Animation_4n3ky"]
+resource_name = "he orbit"
+length = 20.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FloatingSpaceMan:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 10),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(292, 197), Vector2(31, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_thth7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("FloatingSpaceMan:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.001),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(342, 165), Vector2(87, 75)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_e4pst"]
+_data = {
+"RESET": SubResource("Animation_thth7"),
+"he orbit": SubResource("Animation_4n3ky")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_5xkjv")
+script = ExtResource("1_7ui5b")
+
+[node name="FloatingSpaceMan" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(342, 165)
+texture = ExtResource("4_qmg6k")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_mirroring = Vector2(320, 200)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture = ExtResource("1_186hu")
+centered = false
+
+[node name="Title" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 15.0
+offset_right = 20.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "SPACE MINER"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.45
+anchor_right = 0.5
+anchor_bottom = 0.45
+grow_horizontal = 2
+
+[node name="PlayButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+focus_neighbor_top = NodePath("../OptionsButton")
+focus_neighbor_bottom = NodePath("../OptionsButton")
+focus_next = NodePath("../OptionsButton")
+focus_previous = NodePath("../OptionsButton")
+text = "PLAY"
+
+[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../PlayButton")
+focus_neighbor_bottom = NodePath("../PlayButton")
+focus_next = NodePath("../PlayButton")
+focus_previous = NodePath("../PlayButton")
+disabled = true
+text = "OPTIONS"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+playback_default_blend_time = 1.0
+libraries = {
+"": SubResource("AnimationLibrary_e4pst")
+}
