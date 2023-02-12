@@ -7,12 +7,17 @@ extends Control
 @onready var play_button: Button = %PlayButton
 @onready var spaceman: Sprite2D = %FloatingSpaceMan
 @onready var animation: AnimationPlayer = $AnimationPlayer
+@onready var play_pressed: AudioStreamPlayer = $PlayPressed
 
 
 func _ready() -> void:
 	play_button.grab_focus.call_deferred()
 
 	play_button.pressed.connect(func():
+		play_pressed.play()
+		await self.create_tween().tween_property(
+			self, "modulate", Color.BLACK, play_pressed.stream.get_length()).finished
+
 		get_tree().get_root().add_child(load("res://src/game.tscn").instantiate())
 		self.queue_free())
 

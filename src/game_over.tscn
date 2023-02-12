@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dl4pmx5dfnb62"]
+[gd_scene load_steps=6 format=3 uid="uid://dl4pmx5dfnb62"]
 
 [ext_resource type="Theme" uid="uid://cgb6s4wgbu4ma" path="res://src/theme.tres" id="1_0eyqg"]
 [ext_resource type="Texture2D" uid="uid://c8mfgbygmcv18" path="res://assets/background.png" id="1_chwuh"]
 [ext_resource type="Script" path="res://src/game_over.gd" id="2_at506"]
+[ext_resource type="AudioStream" uid="uid://cmxnkwem4bwtn" path="res://addons/kenney_interface_sounds/scroll_003.wav" id="4_oipre"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_gvqps"]
 
@@ -77,3 +78,6 @@ offset_bottom = -10.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "BACK TO MENU"
+
+[node name="TextScroll" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_oipre")

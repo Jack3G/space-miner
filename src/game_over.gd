@@ -13,6 +13,7 @@ var _duration_text: String = ""
 @onready var gold: Label = %Gold
 @onready var duration: Label = %Duration
 @onready var menu_button: Button = %MenuButton
+@onready var text_scroll: AudioStreamPlayer = $TextScroll
 
 
 func load_ui_package(package: Dictionary) -> void:
@@ -51,6 +52,7 @@ func _ready() -> void:
 
 	await get_tree().create_timer(3).timeout
 
+	text_scroll.play()
 	await self.create_tween().tween_property(
 		gold, "visible_characters",
 		gold.text.length() - _characters_in_gold_count, 1).finished
@@ -61,6 +63,7 @@ func _ready() -> void:
 		gold.text.length(), 1).finished
 	await get_tree().create_timer(1).timeout
 
+	text_scroll.play()
 	await self.create_tween().tween_property(
 		duration, "visible_characters",
 		duration.text.length() - _characters_in_duration, 1).finished

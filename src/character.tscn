@@ -1,8 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://b21vfp2hf7k21"]
+[gd_scene load_steps=17 format=3 uid="uid://b21vfp2hf7k21"]
 
 [ext_resource type="Script" path="res://src/character.gd" id="1_rvdxv"]
 [ext_resource type="Texture2D" uid="uid://bkfllh02oan4o" path="res://assets/player.png" id="2_jlm42"]
 [ext_resource type="Texture2D" uid="uid://b0vtcgs3s5r0n" path="res://assets/pickaxe.png" id="3_2hy0a"]
+[ext_resource type="AudioStream" uid="uid://bnstja2bvyj64" path="res://assets/rock.wav" id="4_66f6k"]
+[ext_resource type="AudioStream" uid="uid://cfbvsbunia0dn" path="res://assets/boost.wav" id="5_lxijq"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l1cqh"]
 radius = 8.0
@@ -233,3 +235,9 @@ libraries = {
 "": SubResource("AnimationLibrary_dpngt")
 }
 blend_times = [&"swing", &"swing", 0.5]
+
+[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_66f6k")
+
+[node name="BoostSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_lxijq")

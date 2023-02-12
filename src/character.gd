@@ -34,6 +34,8 @@ var _creation_time: int = Time.get_ticks_msec()
 @onready var pickaxe: Node2D = $PickContainer/Pickaxe
 @onready var pickaxe_area: Area2D = $PickContainer/Pickaxe/HitArea
 @onready var pickaxe_anim: AnimationPlayer = $PickContainer/Pickaxe/AnimationPlayer
+@onready var break_sound: AudioStreamPlayer = $BreakSound
+@onready var boost_sound: AudioStreamPlayer = $BoostSound
 
 signal died
 
@@ -64,6 +66,7 @@ func _on_pick_area_entered(area: Area2D) -> void:
 			_pick_has_broken = true
 			pickaxe_anim.current_animation = "RESET"
 			var drops = area.break_rock()
+			break_sound.play()
 
 			if drops.has(Resources.Ore.OXYGEN):
 				_oxygen += drops[Resources.Ore.OXYGEN]
@@ -190,6 +193,7 @@ func _physics_process(delta: float) -> void:
 			self.velocity += impulse
 		elif _boost_charge >= boost_charge_max:
 			_boost_charge = 0
+			boost_sound.play()
 
 			var input_dir = directional_input
 			if input_dir == Vector2.ZERO:
