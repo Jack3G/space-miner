@@ -11,6 +11,7 @@ extends CharacterBody2D
 @export var boost_charge_max: float = 50
 @export var boost_recharge_rate: float = 50
 @export var oxygen_max: float = 100
+@export var oxygen_use_rate: float = 4
 
 var _gravity_areas: Array[GravityArea] = []
 var _coyote_mode: bool = false
@@ -33,10 +34,11 @@ var _gold: int = 0
 @onready var pickaxe_area: Area2D = $PickContainer/Pickaxe/HitArea
 @onready var pickaxe_anim: AnimationPlayer = $PickContainer/Pickaxe/AnimationPlayer
 
+signal died
+
 
 func entered_gravity_area(area: GravityArea) -> void:
 	_gravity_areas.append(area)
-
 
 func get_ui_package() -> Dictionary:
 	var blips: Array[Vector2] = []
@@ -54,17 +56,23 @@ func get_ui_package() -> Dictionary:
 		blips = blips,
 	}
 
+func _on_pick_area_entered(area: Area2D) -> void:
+		if area.is_in_group("rocks") and not _pick_has_broken:
+			_pick_has_broken = true
+			pickaxe_anim.current_animation = "RESET"
+			var drops = area.break_rock()
+
+			if drops.has(Resources.Ore.OXYGEN):
+				_oxygen += drops[Resources.Ore.OXYGEN]
+			if drops.has(Resources.Ore.GOLD):
+				_gold += drops[Resources.Ore.GOLD]
 
 func _ready() -> void:
 	coyote_timer.one_shot = true
 	coyote_timer.timeout.connect(func():
 		_coyote_mode = false)
 
-	pickaxe_area.area_entered.connect(func(area: Area2D):
-		if area.is_in_group("rocks") and not _pick_has_broken:
-			_pick_has_broken = true
-			pickaxe_anim.current_animation = "RESET"
-			area.break_rock())
+	pickaxe_area.area_entered.connect(_on_pick_area_entered)
 
 
 func _physics_process(delta: float) -> void:
@@ -97,6 +105,12 @@ func _physics_process(delta: float) -> void:
 
 	_boost_charge += boost_recharge_rate * delta
 	_boost_charge = clampf(_boost_charge, 0, boost_charge_max)
+
+	_oxygen -= oxygen_use_rate * delta
+	_oxygen = clampf(_oxygen, 0, oxygen_max)
+
+	if _oxygen <= 0:
+		self.died.emit()
 
 	var pick_anim_ready = pickaxe_anim.current_animation != "swing"
 	if Input.is_action_pressed("swing") and pick_anim_ready:

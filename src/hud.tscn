@@ -1,8 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://df7l0upmbd058"]
+[gd_scene load_steps=11 format=3 uid="uid://df7l0upmbd058"]
 
 [ext_resource type="FontFile" uid="uid://dqwpy6dvd2twp" path="res://assets/fonts/Kenney Mini Square.ttf" id="1_nm3hb"]
 [ext_resource type="Script" path="res://src/hud.gd" id="2_1208b"]
-[ext_resource type="Texture2D" uid="uid://mbdj8jvx2jjy" path="res://assets/radar.png" id="3_uyjy6"]
+[ext_resource type="LabelSettings" uid="uid://dvas6t8jbtuor" path="res://src/hud_label_settings.tres" id="3_3xwnp"]
+[ext_resource type="Texture2D" uid="uid://crkemll2cnpc" path="res://src/radar.tres" id="3_6uk1t"]
+[ext_resource type="Texture2D" uid="uid://duwohs5riej6x" path="res://assets/O2.png" id="3_jaodg"]
+[ext_resource type="Texture2D" uid="uid://b8xsmn0u5u61p" path="res://assets/fuel.png" id="4_mwx8a"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rqnyi"]
 bg_color = Color(0.360784, 0.360784, 0.360784, 1)
@@ -27,11 +30,6 @@ default_font = ExtResource("1_nm3hb")
 ProgressBar/styles/background = SubResource("StyleBoxFlat_rqnyi")
 ProgressBar/styles/fill = SubResource("StyleBoxFlat_y6mam")
 
-[sub_resource type="LabelSettings" id="LabelSettings_8y0hp"]
-line_spacing = 0.0
-font = ExtResource("1_nm3hb")
-font_size = 8
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ki2y"]
 bg_color = Color(0.196078, 0.615686, 1, 1)
 
@@ -45,29 +43,45 @@ grow_vertical = 2
 theme = SubResource("Theme_e6e6u")
 script = ExtResource("2_1208b")
 
-[node name="Left" type="VBoxContainer" parent="."]
-layout_mode = 0
+[node name="TopLeft" type="GridContainer" parent="."]
+layout_mode = 2
 offset_left = 5.0
 offset_top = 2.0
-offset_right = 80.0
-offset_bottom = 42.0
+offset_right = 92.0
+offset_bottom = 36.0
+columns = 2
 
-[node name="Label" type="Label" parent="Left"]
+[node name="empty" type="Control" parent="TopLeft"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="TopLeft"]
 layout_mode = 2
 text = "Space Miner"
-label_settings = SubResource("LabelSettings_8y0hp")
+label_settings = ExtResource("3_3xwnp")
 
-[node name="Health" type="ProgressBar" parent="Left"]
+[node name="TextureRect" type="TextureRect" parent="TopLeft"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("3_jaodg")
+stretch_mode = 2
+
+[node name="Health" type="ProgressBar" parent="TopLeft"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(75, 3)
 layout_mode = 2
 size_flags_horizontal = 0
+size_flags_vertical = 4
 max_value = 1.0
 value = 0.75
 allow_greater = true
 show_percentage = false
 
-[node name="BoostMeter" type="ProgressBar" parent="Left"]
+[node name="Boost" type="TextureRect" parent="TopLeft"]
+layout_mode = 2
+size_flags_horizontal = 8
+texture = ExtResource("4_mwx8a")
+
+[node name="BoostMeter" type="ProgressBar" parent="TopLeft"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(50, 5)
 layout_mode = 2
@@ -87,4 +101,32 @@ anchor_right = 1.0
 offset_top = 5.0
 offset_right = -5.0
 grow_horizontal = 0
-texture = ExtResource("3_uyjy6")
+texture = ExtResource("3_6uk1t")
+
+[node name="BottomLeft" type="GridContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_bottom = -10.0
+grow_vertical = 0
+columns = 2
+
+[node name="Label" type="Label" parent="BottomLeft"]
+layout_mode = 2
+text = "Gold: "
+label_settings = ExtResource("3_3xwnp")
+horizontal_alignment = 2
+
+[node name="Gold" type="Label" parent="BottomLeft"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "asd"
+label_settings = ExtResource("3_3xwnp")
+
+[node name="Polygon2D" type="Polygon2D" parent="BottomLeft"]
+show_behind_parent = true
+position = Vector2(-10, -160)
+color = Color(0.0705882, 1, 0.380392, 0.176471)
+polygon = PackedVector2Array(-30, 145, 61, 145, 77, 160, 77, 198, -30, 197)

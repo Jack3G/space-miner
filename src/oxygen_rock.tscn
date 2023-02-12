@@ -25,6 +25,10 @@ emission_shape = 3
 emission_box_extents = Vector3(10, 3, 1)
 particle_flag_disable_z = true
 direction = Vector3(0, -1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 9.8
+initial_velocity_max = 9.8
 angular_velocity_min = -64.28
 angular_velocity_max = 64.29
 orbit_velocity_min = 0.0
@@ -39,7 +43,7 @@ color_ramp = SubResource("GradientTexture1D_u5mvn")
 script = ExtResource("1_4bcuw")
 textures = Array[Texture2D]([ExtResource("4_apqi3")])
 drops = {
-1: 20
+1: 50
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

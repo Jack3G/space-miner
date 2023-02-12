@@ -9,19 +9,23 @@ var _blips: Array[Vector2] = []
 @onready var health_bar: ProgressBar = %Health
 @onready var boost_meter: ProgressBar = %BoostMeter
 @onready var radar: TextureRect = %Radar
+@onready var gold: Label = %Gold
 
 func load_ui_package(package: Dictionary) -> void:
-	if package.boost_charge_max:
+	if package.has("boost_charge_max"):
 		boost_meter.max_value = package.boost_charge_max
-	if package.boost_charge:
+	if package.has("boost_charge"):
 		boost_meter.value = package.boost_charge
 
-	if package.oxygen_max:
+	if package.has("oxygen_max"):
 		health_bar.max_value = package.oxygen_max
-	if package.oxygen:
+	if package.has("oxygen"):
 		health_bar.value = package.oxygen
 
-	_blips = package.blips
+	if package.has("blips"):
+		_blips = package.blips
+	if package.has("gold"):
+		gold.text = str(package.gold)
 
 	self.queue_redraw()
 

@@ -1,0 +1,29 @@
+[gd_resource type="AnimatedTexture" load_steps=9 format=3 uid="uid://crkemll2cnpc"]
+
+[ext_resource type="Texture2D" uid="uid://c7b0wxugk5ekp" path="res://assets/radar1.png" id="1_7lwko"]
+[ext_resource type="Texture2D" uid="uid://ch1citc0uu7f0" path="res://assets/radar2.png" id="2_akw8e"]
+[ext_resource type="Texture2D" uid="uid://des5xo3su717i" path="res://assets/radar3.png" id="3_7feqs"]
+[ext_resource type="Texture2D" uid="uid://00ectr6kk53t" path="res://assets/radar4.png" id="4_wanv5"]
+[ext_resource type="Texture2D" uid="uid://b3nayvwvbwcpf" path="res://assets/radar5.png" id="5_1p7mo"]
+[ext_resource type="Texture2D" uid="uid://64sikbdwisx8" path="res://assets/radar6.png" id="6_f4e1c"]
+[ext_resource type="Texture2D" uid="uid://cad54k44t4msj" path="res://assets/radar7.png" id="7_kxrh5"]
+[ext_resource type="Texture2D" uid="uid://cmixv4k8qlgab" path="res://assets/radar8.png" id="8_jp5yn"]
+
+[resource]
+frames = 8
+frame_0/texture = ExtResource("1_7lwko")
+frame_0/duration = 0.5
+frame_1/texture = ExtResource("2_akw8e")
+frame_1/duration = 0.5
+frame_2/texture = ExtResource("3_7feqs")
+frame_2/duration = 0.5
+frame_3/texture = ExtResource("4_wanv5")
+frame_3/duration = 0.5
+frame_4/texture = ExtResource("5_1p7mo")
+frame_4/duration = 0.5
+frame_5/texture = ExtResource("6_f4e1c")
+frame_5/duration = 0.5
+frame_6/texture = ExtResource("7_kxrh5")
+frame_6/duration = 0.5
+frame_7/texture = ExtResource("8_jp5yn")
+frame_7/duration = 0.5

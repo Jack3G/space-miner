@@ -106,6 +106,7 @@ func _ready() -> void:
 	for planet_seed in planet_seeds:
 		var new_planet = preload("res://src/planet.tscn").instantiate()
 		new_planet.position = planet_seed
+		new_planet.rotation = randf_range(0, TAU)
 		self.add_child(new_planet)
 
 
