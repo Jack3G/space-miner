@@ -9,6 +9,12 @@ extends StaticBody2D
 @export var atmosphere_color: Color
 @export var gravity: float = 200
 
+@export var rock_spawn_chance: float = 0.08
+@export var rocks: Array[PackedScene] = [
+	preload("res://src/gold_rock.tscn"),
+	preload("res://src/oxygen_rock.tscn"),
+]
+
 @export var textures: Array[Texture]
 
 @onready var max_size: Node2D = $MaxSize
@@ -32,6 +38,12 @@ func _ready() -> void:
 
 		var new_point = Vector2.from_angle(angle) * (radius + offset * offset_scale)
 		polygon.append(new_point)
+
+		if randf() <= rock_spawn_chance:
+			var new_rock = rocks.pick_random().instantiate()
+			new_rock.rotation = angle + PI/2
+			new_rock.position = new_point
+			self.add_child(new_rock)
 
 	collision.polygon = polygon
 	self.add_child(collision)

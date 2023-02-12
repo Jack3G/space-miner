@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=3 uid="uid://cw0unifya33ja"]
+
+[ext_resource type="Texture2D" uid="uid://cqj1abdjm4xnx" path="res://assets/rock1.png" id="1_0woni"]
+[ext_resource type="Script" path="res://src/rock.gd" id="1_2dka5"]
+[ext_resource type="Texture2D" uid="uid://ce570trewove6" path="res://assets/rock2.png" id="2_0q1nc"]
+[ext_resource type="Texture2D" uid="uid://ckwhg1wag876b" path="res://assets/sparkle.png" id="4_8hd7p"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wlnrb"]
+size = Vector2(28, 14)
+
+[sub_resource type="Animation" id="Animation_h7dv4"]
+resource_name = "sparkle"
+length = 5.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sparkle:rotation")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.496581, 1.33512]
+}
+
+[sub_resource type="Animation" id="Animation_jrndl"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sparkle:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.496581]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u2wc7"]
+_data = {
+"RESET": SubResource("Animation_jrndl"),
+"sparkle": SubResource("Animation_h7dv4")
+}
+
+[sub_resource type="Gradient" id="Gradient_bwee4"]
+offsets = PackedFloat32Array(0.295858, 0.680473)
+colors = PackedColorArray(0.980392, 0.941176, 0.176471, 1, 1, 0.4625, 0.25, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xx6rm"]
+gradient = SubResource("Gradient_bwee4")
+width = 4
+
+[sub_resource type="Gradient" id="Gradient_cylk7"]
+offsets = PackedFloat32Array(0.544379, 0.822485, 1)
+colors = PackedColorArray(1, 0.773667, 0.03, 1, 0, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fb7vy"]
+gradient = SubResource("Gradient_cylk7")
+width = 4
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ug4dw"]
+particle_flag_disable_z = true
+direction = Vector3(0, -1, 0)
+gravity = Vector3(0, 98, 0)
+initial_velocity_min = 20.0
+initial_velocity_max = 50.0
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+color_ramp = SubResource("GradientTexture1D_fb7vy")
+color_initial_ramp = SubResource("GradientTexture1D_xx6rm")
+
+[node name="GoldRock" type="Area2D" groups=["rocks"]]
+script = ExtResource("1_2dka5")
+textures = Array[Texture2D]([ExtResource("2_0q1nc"), ExtResource("1_0woni")])
+drops = {
+0: 5
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, -6)
+shape = SubResource("RectangleShape2D_wlnrb")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("1_0woni")
+
+[node name="Sparkle" type="Sprite2D" parent="."]
+position = Vector2(-7, -9)
+rotation = 0.496581
+texture = ExtResource("4_8hd7p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u2wc7")
+}
+
+[node name="BreakParticles" type="GPUParticles2D" parent="."]
+position = Vector2(0, -7)
+emitting = false
+amount = 16
+process_material = SubResource("ParticleProcessMaterial_ug4dw")
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+trail_sections = 2
+trail_section_subdivisions = 2

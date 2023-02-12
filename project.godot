@@ -15,6 +15,10 @@ run/main_scene="res://src/game.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 config/icon="res://assets/player.png"
 
+[autoload]
+
+Resources="*res://src/autoloads/resources.gd"
+
 [display]
 
 window/size/viewport_width=320
