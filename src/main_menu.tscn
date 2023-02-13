@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bql4t7bonh67b"]
+[gd_scene load_steps=12 format=3 uid="uid://4xvqi6i72d8v"]
 
 [ext_resource type="Theme" uid="uid://cgb6s4wgbu4ma" path="res://src/theme.tres" id="1_5xkjv"]
 [ext_resource type="Script" path="res://src/main_menu.gd" id="1_7ui5b"]
 [ext_resource type="Texture2D" uid="uid://c8mfgbygmcv18" path="res://assets/background.png" id="1_186hu"]
 [ext_resource type="Texture2D" uid="uid://bkfllh02oan4o" path="res://assets/player.png" id="4_qmg6k"]
 [ext_resource type="AudioStream" uid="uid://c84ojpf6ha0ga" path="res://addons/kenney_interface_sounds/confirmation_002.wav" id="5_5fau8"]
+[ext_resource type="Script" path="res://addons/remap/RemapButton.gd" id="6_iai1g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_e0f33"]
 radius = 8.0
@@ -14,6 +15,13 @@ size = Vector2(340, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ya3e1"]
 size = Vector2(20, 200)
+
+[sub_resource type="InputEventAction" id="InputEventAction_8vmoy"]
+action = &"ui_cancel"
+pressed = true
+
+[sub_resource type="Shortcut" id="Shortcut_pv3mn"]
+events = [SubResource("InputEventAction_8vmoy")]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -25,17 +33,6 @@ grow_vertical = 2
 theme = ExtResource("1_5xkjv")
 script = ExtResource("1_7ui5b")
 
-[node name="FloatingSpaceMan" type="CharacterBody2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(60, 52)
-motion_mode = 1
-
-[node name="FloatingSpaceMan" type="Sprite2D" parent="FloatingSpaceMan"]
-texture = ExtResource("4_qmg6k")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FloatingSpaceMan"]
-shape = SubResource("CircleShape2D_e0f33")
-
 [node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
@@ -45,21 +42,37 @@ motion_mirroring = Vector2(320, 200)
 texture = ExtResource("1_186hu")
 centered = false
 
-[node name="Title" type="Label" parent="."]
+[node name="MainPane" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FloatingSpaceMan" type="CharacterBody2D" parent="MainPane"]
+unique_name_in_owner = true
+position = Vector2(60, 52)
+motion_mode = 1
+
+[node name="FloatingSpaceMan" type="Sprite2D" parent="MainPane/FloatingSpaceMan"]
+texture = ExtResource("4_qmg6k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainPane/FloatingSpaceMan"]
+shape = SubResource("CircleShape2D_e0f33")
+
+[node name="MainTitle" type="Label" parent="MainPane"]
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -20.0
 offset_top = 15.0
-offset_right = 20.0
-offset_bottom = 23.0
 grow_horizontal = 2
 text = "SPACE MINER"
 horizontal_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="MainPane"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -68,7 +81,7 @@ anchor_right = 0.5
 anchor_bottom = 0.45
 grow_horizontal = 2
 
-[node name="PlayButton" type="Button" parent="VBoxContainer"]
+[node name="PlayButton" type="Button" parent="MainPane/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_top = NodePath("../OptionsButton")
@@ -77,32 +90,123 @@ focus_next = NodePath("../OptionsButton")
 focus_previous = NodePath("../OptionsButton")
 text = "PLAY"
 
-[node name="OptionsButton" type="Button" parent="VBoxContainer"]
+[node name="OptionsButton" type="Button" parent="MainPane/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 focus_neighbor_top = NodePath("../PlayButton")
 focus_neighbor_bottom = NodePath("../PlayButton")
 focus_next = NodePath("../PlayButton")
 focus_previous = NodePath("../PlayButton")
-disabled = true
 text = "OPTIONS"
 
-[node name="PlayPressed" type="AudioStreamPlayer" parent="."]
+[node name="PlayPressed" type="AudioStreamPlayer" parent="MainPane"]
+unique_name_in_owner = true
 stream = ExtResource("5_5fau8")
 
-[node name="Walls" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="MainPane"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MainPane/Walls"]
 position = Vector2(160, 0)
 shape = SubResource("RectangleShape2D_btjko")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="MainPane/Walls"]
 position = Vector2(0, 90)
 shape = SubResource("RectangleShape2D_ya3e1")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="MainPane/Walls"]
 position = Vector2(320, 90)
 shape = SubResource("RectangleShape2D_ya3e1")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="MainPane/Walls"]
 position = Vector2(160, 180)
 shape = SubResource("RectangleShape2D_btjko")
+
+[node name="OptionsPane" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 320.0
+offset_right = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="OptionsPane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_top = 15.0
+offset_bottom = 23.0
+grow_horizontal = 2
+text = "Options"
+horizontal_alignment = 1
+
+[node name="BackButton" type="Button" parent="OptionsPane"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 53.0
+offset_bottom = 33.0
+shortcut = SubResource("Shortcut_pv3mn")
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="OptionsPane"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 45.0
+offset_right = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionsPane/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="InputRemap" type="VBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Jump" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Jump / Boost"
+action = "jump"
+
+[node name="move_left" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Move Left"
+action = "move_left"
+
+[node name="move_left2" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Move Right"
+action = "move_right"
+
+[node name="move_left3" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Move Up"
+action = "move_up"
+
+[node name="move_left4" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Move Down"
+action = "move_down"
+
+[node name="swing" type="HBoxContainer" parent="OptionsPane/ScrollContainer/MarginContainer/InputRemap"]
+layout_mode = 2
+script = ExtResource("6_iai1g")
+_name = "Swing Pick"
+action = "swing"

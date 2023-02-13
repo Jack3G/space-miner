@@ -4,10 +4,16 @@ extends Control
 @export var spaceman_velocity: Vector2 = Vector2(20, 30)
 
 @onready var background: ParallaxBackground = $ParallaxBackground
-@onready var title: Label = %Title
-@onready var play_button: Button = %PlayButton
+@onready var title: Label = %MainTitle
 @onready var spaceman: CharacterBody2D = %FloatingSpaceMan
-@onready var play_pressed: AudioStreamPlayer = $PlayPressed
+@onready var play_pressed: AudioStreamPlayer = %PlayPressed
+
+@onready var play_button: Button = %PlayButton
+@onready var options_button: Button = %OptionsButton
+@onready var back_button: Button = %BackButton
+
+@onready var main_pane: Control = $MainPane
+@onready var options_pane: Control = $OptionsPane
 
 
 func _ready() -> void:
@@ -20,6 +26,22 @@ func _ready() -> void:
 
 		get_tree().get_root().add_child(load("res://src/game.tscn").instantiate())
 		self.queue_free())
+
+	options_button.pressed.connect(func():
+		main_pane.process_mode = Node.PROCESS_MODE_DISABLED
+		self.create_tween().tween_property(main_pane, "position",
+			Vector2(-main_pane.size.x, 0), 1)
+		options_pane.process_mode = Node.PROCESS_MODE_INHERIT
+		self.create_tween().tween_property(options_pane, "position",
+				Vector2.ZERO, 1))
+
+	back_button.pressed.connect(func():
+		main_pane.process_mode = Node.PROCESS_MODE_INHERIT
+		self.create_tween().tween_property(main_pane, "position",
+			Vector2.ZERO, 1)
+		options_pane.process_mode = Node.PROCESS_MODE_DISABLED
+		self.create_tween().tween_property(options_pane, "position",
+				Vector2(options_pane.size.x, 0), 1))
 
 	spaceman.velocity = spaceman_velocity
 
