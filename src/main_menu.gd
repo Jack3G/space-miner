@@ -28,18 +28,14 @@ func _ready() -> void:
 		self.queue_free())
 
 	options_button.pressed.connect(func():
-		main_pane.process_mode = Node.PROCESS_MODE_DISABLED
 		self.create_tween().tween_property(main_pane, "position",
 			Vector2(-main_pane.size.x, 0), 1)
-		options_pane.process_mode = Node.PROCESS_MODE_INHERIT
 		self.create_tween().tween_property(options_pane, "position",
 				Vector2.ZERO, 1))
 
 	back_button.pressed.connect(func():
-		main_pane.process_mode = Node.PROCESS_MODE_INHERIT
 		self.create_tween().tween_property(main_pane, "position",
 			Vector2.ZERO, 1)
-		options_pane.process_mode = Node.PROCESS_MODE_DISABLED
 		self.create_tween().tween_property(options_pane, "position",
 				Vector2(options_pane.size.x, 0), 1))
 
