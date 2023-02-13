@@ -28,16 +28,22 @@ func _ready() -> void:
 		self.queue_free())
 
 	options_button.pressed.connect(func():
+		options_pane.visible = true
 		self.create_tween().tween_property(main_pane, "position",
 			Vector2(-main_pane.size.x, 0), 1)
-		self.create_tween().tween_property(options_pane, "position",
-				Vector2.ZERO, 1))
+		await self.create_tween().tween_property(options_pane, "position",
+			Vector2.ZERO, 1).finished
+		main_pane.visible = false
+		back_button.grab_focus())
 
 	back_button.pressed.connect(func():
+		main_pane.visible = true
 		self.create_tween().tween_property(main_pane, "position",
 			Vector2.ZERO, 1)
-		self.create_tween().tween_property(options_pane, "position",
-				Vector2(options_pane.size.x, 0), 1))
+		await self.create_tween().tween_property(options_pane, "position",
+			Vector2(options_pane.size.x, 0), 1).finished
+		options_pane.visible = false
+		options_button.grab_focus())
 
 	spaceman.velocity = spaceman_velocity
 
