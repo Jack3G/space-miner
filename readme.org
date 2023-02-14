@@ -1,0 +1,15 @@
+* Space Miner
+Mine gold in space while managing your oxygen supply.
+
+itch.io link: [[https://Jack3G.itch.io/space-miner]]
+
+[[file:screenshots/cover-image.png]]
+[[file:screenshots/in-game.png]]
+
+Credit:
+|------------------------------------+---------------------|
+| [[https://kenney.nl/assets/kenney-fonts][Font]] and [[https://kenney.nl/assets/interface-sounds][some of the sound effects]] | [[https://kenney.nl][Kenney]] the CC0 chad |
+| [[https://github.com/bend-n/remap][RemapTools]]                         | [[https://github.com/bend-n][bend-n]]              |
+| [[https://godotengine.org][Godot]]                              | [[https://github.com/orgs/godotengine/people][These guys]]          |
+| Everything else                    | me :)               |
+|------------------------------------+---------------------|
