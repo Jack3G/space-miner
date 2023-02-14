@@ -12,4 +12,3 @@ Credit:
 | [[https://github.com/bend-n/remap][RemapTools]]                         | [[https://github.com/bend-n][bend-n]]              |
 | [[https://godotengine.org][Godot]]                              | [[https://github.com/orgs/godotengine/people][These guys]]          |
 | Everything else                    | me :)               |
-|------------------------------------+---------------------|
